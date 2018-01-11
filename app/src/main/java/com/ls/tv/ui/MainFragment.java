@@ -1,7 +1,5 @@
 package com.ls.tv.ui;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.BrowseFragment;
@@ -9,12 +7,11 @@ import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
-import android.support.v17.leanback.widget.Presenter;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ls.tv.R;
+import com.ls.tv.model.Movie;
+import com.ls.tv.presenter.CardPresenter;
+import com.ls.tv.presenter.GridItemPresenter;
 import com.ls.tv.utils.LogUtils;
 
 /**
@@ -63,58 +60,44 @@ public class MainFragment extends BrowseFragment {
 
     /**
      * 设置导航栏和内容区的内容
-     * 1> 整个mainFragment看做是一个RowsAdapter(ArrayObjectAdapter)：由一组ListRow构成
-     * 2> ListRow：headerItem对应左侧抽屉导航栏内的标题，每个标题对应的ArrayObjectAdapter是右侧内容界面
+     * 1. 整个内容界面看做是一个rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());；
+     * 2. ArrayObjectAdapter对象由实现了Presenter接口的对象构造；
+     * 3. 实现了Presenter接口的类，决定了ArrayObjectAdapter的UI界面样式；
+     * 4. rowsAdapter有可以填充左侧抽屉导航栏和右侧内容区域；
+     * 5. rowsAdapter填充对象时一组ListRow;
+     * 6. ListRow由HeaderItem(导航栏标题)和ArrayObjectAdapter(内容区)构成；
      */
     private void loadRows() {
-        //主界面内容容器adapter
+        //主界面容器adapter：导航栏HeaderItem和rowsAdapter成对构成
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-
+        //--第1组内容--------------------------------------------
         /* GridItemPresenter */
+        //1->创建一个导航栏标题；
         HeaderItem gridItemPresenterHeader = new HeaderItem(0, "GridItemPresenter");
 
         GridItemPresenter mGridPresenter = new GridItemPresenter();
+        //2->创建每个导航栏标题对应的内容
         ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
         gridRowAdapter.add("ITEM 1");
         gridRowAdapter.add("ITEM 2");
         gridRowAdapter.add("ITEM 3");
         mRowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
+        //--第2组内容--------------------------------------------
+        /* CardPresenter */
+        HeaderItem cardPresenterHeader = new HeaderItem(1, "CardPresenter");
+        CardPresenter cardPresenter = new CardPresenter();
+        ArrayObjectAdapter cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
+
+        for (int i = 0; i < 10; i++) {
+            Movie movie = new Movie();
+            movie.setTitle("title" + i);
+            movie.setStudio("studio" + i);
+            cardRowAdapter.add(movie);
+        }
+        mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
 
         /* set */
         setAdapter(mRowsAdapter);
     }
-
-    /**
-     * 对应主界面左侧抽屉导航栏的标题组内的每个item的UI
-     */
-    private class GridItemPresenter extends Presenter {
-        /* Grid row item settings */
-        private static final int GRID_ITEM_WIDTH = 300;
-        private static final int GRID_ITEM_HEIGHT = 200;
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent) {
-            Context context = parent.getContext();
-            TextView view = new TextView(parent.getContext());
-            view.setLayoutParams(new ViewGroup.LayoutParams(GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT));
-            view.setFocusable(true);
-            view.setFocusableInTouchMode(true);
-            view.setBackgroundColor(context.getResources().getColor(R.color.default_background));
-            view.setTextColor(Color.WHITE);
-            view.setGravity(Gravity.CENTER);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder viewHolder, Object item) {
-            ((TextView) viewHolder.view).setText((String) item);
-        }
-
-        @Override
-        public void onUnbindViewHolder(ViewHolder viewHolder) {
-
-        }
-    }
-
 
 }

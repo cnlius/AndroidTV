@@ -12,4 +12,9 @@ public class LogUtils {
         String tag = object.getClass().getSimpleName();
         Log.i(tag,content);
     }
+
+    public static void d(Object object, String content) {
+        String tag = object.getClass().getSimpleName();
+        Log.d(tag,content);
+    }
 }
