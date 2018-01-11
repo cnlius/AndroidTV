@@ -50,6 +50,21 @@ public class CardPresenter extends Presenter {
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
         cardView.setBackgroundColor(context.getResources().getColor(R.color.fastlane_background));
+        //导航打开时item的cardView默认只有图片，导航关闭时可以设置以下几种效果；
+        //imageView作为主要区域，标题和内容文本位于信息区域
+//        cardView.setCardType(ImageCardView.CARD_TYPE_FLAG_IMAGE_ONLY); //只显示主题图片
+//        cardView.setCardType(ImageCardView.CARD_TYPE_FLAG_TITLE); //只显示标题和描述信息
+//        cardView.setCardType(ImageCardView.CARD_TYPE_FLAG_CONTENT); //默认：都显示
+//        cardView.setCardType(ImageCardView.CARD_TYPE_FLAG_ICON_RIGHT); //只显示图片
+//        cardView.setCardType(ImageCardView.CARD_TYPE_FLAG_ICON_LEFT); //只显示图片
+//        cardView.setCardType(ImageCardView.CARD_TYPE_INFO_OVER); // 文字信息
+//        cardView.setCardType(ImageCardView.CARD_TYPE_INFO_UNDER); // 都显示
+//        cardView.setCardType(ImageCardView.CARD_TYPE_INFO_UNDER_WITH_EXTRA); //都显示
+
+        //设置cardView信息区域，在导航栏开关状态下的显示方式；
+//        cardView.setInfoVisibility(ImageCardView.CARD_REGION_VISIBLE_ALWAYS); //导航栏开关状态下，区域（标题和内容文本区域）将始终显示;
+//        cardView.setInfoVisibility(ImageCardView.CARD_REGION_VISIBLE_ACTIVATED ); //导航栏关闭时，显示；
+//        cardView.setInfoVisibility(ImageCardView.CARD_REGION_VISIBLE_SELECTED); //选择的时候才会显示内容
         return new ViewHolder(cardView);
     }
 
@@ -58,11 +73,15 @@ public class CardPresenter extends Presenter {
         LogUtils.i(this, "onBindViewHolder");
         ViewHolder holder = (ViewHolder) viewHolder;
         Movie movie = (Movie) item;
+        //标题
         holder.mCardView.setTitleText(movie.getTitle());
+        //描述信息
         holder.mCardView.setContentText(movie.getStudio());
+        //宽高
         holder.mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
         //设置cardImageView的图片
 //        ((ViewHolder) viewHolder).mCardView.setMainImage(((ViewHolder) viewHolder).getDefaultCardImage());
+        //主题图片设置
         GlideApp.with(context)
                 .load(movie.getCardImageUrl())
                 .error(R.drawable.movie)
