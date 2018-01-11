@@ -92,6 +92,7 @@ public class MainFragment extends BrowseFragment {
             Movie movie = new Movie();
             movie.setTitle("title" + i);
             movie.setStudio("studio" + i);
+            movie.setCardImageUrl("https://raw.githubusercontent.com/cnlius/resource/master/images/other/view_01.jpg");
             cardRowAdapter.add(movie);
         }
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));

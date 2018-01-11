@@ -15,24 +15,22 @@
 package com.ls.tv.presenter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ls.tv.R;
+import com.ls.tv.http.GlideApp;
 import com.ls.tv.model.Movie;
 import com.ls.tv.utils.LogUtils;
 
-import java.net.URI;
-
 /**
  * 使用ImageCardView填充内容区域每个item的内容
- *
+ * <p>
  * 1> presenter用来构建ArrayObjectAdapter
  * 2> 导航栏的标题组对应的内容区每个item的UI内容
- *
+ * <p>
  * ImageCardView
  * 1> 可以设置标题、图标、描述内容；
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
@@ -42,11 +40,12 @@ public class CardPresenter extends Presenter {
 
     private static final int CARD_WIDTH = 313;
     private static final int CARD_HEIGHT = 176;
+    private Context context;
 
     @Override
     public Presenter.ViewHolder onCreateViewHolder(ViewGroup parent) {
         LogUtils.i(this, "onCreateViewHolder");
-        Context context = parent.getContext();
+        context = parent.getContext();
         ImageCardView cardView = new ImageCardView(context);
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
@@ -57,13 +56,17 @@ public class CardPresenter extends Presenter {
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
         LogUtils.i(this, "onBindViewHolder");
+        ViewHolder holder = (ViewHolder) viewHolder;
         Movie movie = (Movie) item;
-        ((ViewHolder) viewHolder).setMovie(movie);
-
-        ((ViewHolder) viewHolder).mCardView.setTitleText(movie.getTitle());
-        ((ViewHolder) viewHolder).mCardView.setContentText(movie.getStudio());
-        ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
-        ((ViewHolder) viewHolder).mCardView.setMainImage(((ViewHolder) viewHolder).getDefaultCardImage());
+        holder.mCardView.setTitleText(movie.getTitle());
+        holder.mCardView.setContentText(movie.getStudio());
+        holder.mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+        //设置cardImageView的图片
+//        ((ViewHolder) viewHolder).mCardView.setMainImage(((ViewHolder) viewHolder).getDefaultCardImage());
+        GlideApp.with(context)
+                .load(movie.getCardImageUrl())
+                .error(R.drawable.movie)
+                .into(holder.mCardView.getMainImageView());
     }
 
     @Override
@@ -77,36 +80,11 @@ public class CardPresenter extends Presenter {
     }
 
     static class ViewHolder extends Presenter.ViewHolder {
-        private Movie mMovie;
         private ImageCardView mCardView;
-        private Drawable mDefaultCardImage; //默认图片
-        private Context mContext;
 
         public ViewHolder(View view) {
             super(view);
             mCardView = (ImageCardView) view;
-            mContext = view.getContext();
-            mDefaultCardImage = mContext.getResources().getDrawable(R.drawable.movie);
-        }
-
-        public void setMovie(Movie m) {
-            mMovie = m;
-        }
-
-        public Movie getMovie() {
-            return mMovie;
-        }
-
-        public ImageCardView getCardView() {
-            return mCardView;
-        }
-
-        public Drawable getDefaultCardImage() {
-            return mDefaultCardImage;
-        }
-
-        protected void updateCardViewImage(URI uri) {
-
         }
     }
 }
