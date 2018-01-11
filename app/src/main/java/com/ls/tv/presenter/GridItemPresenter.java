@@ -10,8 +10,9 @@ import android.widget.TextView;
 import com.ls.tv.R;
 
 /**
- * 对应主界面左侧抽屉导航栏的标题组内的每个item的UI
- * presenter用来构建ArrayObjectAdapter
+ * 用一个TextView填充内容区域每个item的内容
+ * 1> presenter用来构建ArrayObjectAdapter
+ * 2> 导航栏的标题组对应的内容区每个item的UI内容
  * Created by liusong on 2018/1/11.
  */
 

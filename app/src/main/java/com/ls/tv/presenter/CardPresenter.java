@@ -27,7 +27,14 @@ import com.ls.tv.utils.LogUtils;
 
 import java.net.URI;
 
-/*
+/**
+ * 使用ImageCardView填充内容区域每个item的内容
+ *
+ * 1> presenter用来构建ArrayObjectAdapter
+ * 2> 导航栏的标题组对应的内容区每个item的UI内容
+ *
+ * ImageCardView
+ * 1> 可以设置标题、图标、描述内容；
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
  * It contains an Image CardView
  */
