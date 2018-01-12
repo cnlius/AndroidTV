@@ -12,7 +12,6 @@ import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
-import android.util.Log;
 
 import com.ls.tv.R;
 import com.ls.tv.model.Movie;
@@ -71,6 +70,7 @@ public class MainFragment extends BrowseFragment {
         setBrandColor(getResources().getColor(R.color.fastlane_background));
         // set search icon color(设置搜索的颜色)
         setSearchAffordanceColor(getResources().getColor(R.color.search_opaque));
+
     }
 
     /**
@@ -131,7 +131,7 @@ public class MainFragment extends BrowseFragment {
     private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            LogUtils.i(this,"onItemSelected");
+            LogUtils.i(this, "onItemSelected");
             if (item instanceof String) { // GridItemPresenter row
                 simpleBackgroundManager.clearBackground();
             } else if (item instanceof Movie) { // CardPresenter row
@@ -146,7 +146,7 @@ public class MainFragment extends BrowseFragment {
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            LogUtils.i(this,"onItemClicked");
+            LogUtils.i(this, "onItemClicked");
         }
     }
 }
