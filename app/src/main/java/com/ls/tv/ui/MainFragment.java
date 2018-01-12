@@ -41,7 +41,7 @@ public class MainFragment extends BrowseFragment {
         setupUIElements();
         //装载数据
         loadRows();
-        //时间监听
+        //事件监听
         setupEventListeners();
 
         //背景管理器初始化
