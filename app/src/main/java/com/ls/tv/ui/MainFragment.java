@@ -14,6 +14,7 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 
 import com.ls.tv.R;
+import com.ls.tv.app.Global;
 import com.ls.tv.model.Movie;
 import com.ls.tv.ui.background.MyBackgroundManager;
 import com.ls.tv.ui.presenter.CardPresenter;
@@ -106,13 +107,7 @@ public class MainFragment extends BrowseFragment {
             Movie movie = new Movie();
             movie.setTitle("title" + i);
             movie.setStudio("studio" + i);
-            if (i % 3 == 0) {
-                movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02580.jpg");
-            } else if (i % 3 == 1) {
-                movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02630.jpg");
-            } else {
-                movie.setCardImageUrl("https://raw.githubusercontent.com/cnlius/resource/master/images/other/view_01.jpg");
-            }
+            setCardImageUrl(i, movie);
             cardRowAdapter.add(movie);
         }
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
@@ -153,6 +148,46 @@ public class MainFragment extends BrowseFragment {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
             LogUtils.i(this, "onItemClicked");
+        }
+    }
+
+    /**
+     * 设置一波网络图片
+     * @param i
+     * @param movie
+     */
+    private void setCardImageUrl(int i, Movie movie) {
+        switch (i){
+            case 1:
+                movie.setCardImageUrl(Global.NET_IMAGE_1);
+                break;
+            case 2:
+                movie.setCardImageUrl(Global.NET_IMAGE_2);
+                break;
+            case 3:
+                movie.setCardImageUrl(Global.NET_IMAGE_3);
+                break;
+            case 4:
+                movie.setCardImageUrl(Global.NET_IMAGE_4);
+                break;
+            case 5:
+                movie.setCardImageUrl(Global.NET_IMAGE_5);
+                break;
+            case 6:
+                movie.setCardImageUrl(Global.NET_IMAGE_6);
+                break;
+            case 7:
+                movie.setCardImageUrl(Global.NET_IMAGE_7);
+                break;
+            case 8:
+                movie.setCardImageUrl(Global.NET_IMAGE_8);
+                break;
+            case 9:
+                movie.setCardImageUrl(Global.NET_IMAGE_9);
+                break;
+            default:
+                movie.setCardImageUrl(Global.NET_IMAGE_10);
+                break;
         }
     }
 }
