@@ -15,7 +15,7 @@ import android.support.v17.leanback.widget.RowPresenter;
 
 import com.ls.tv.R;
 import com.ls.tv.model.Movie;
-import com.ls.tv.ui.background.SimpleBackgroundManager;
+import com.ls.tv.ui.background.MyBackgroundManager;
 import com.ls.tv.ui.presenter.CardPresenter;
 import com.ls.tv.ui.presenter.GridItemPresenter;
 import com.ls.tv.utils.LogUtils;
@@ -31,7 +31,7 @@ public class MainFragment extends BrowseFragment {
     /* Grid row item settings */
     private static final int GRID_ITEM_WIDTH = 300;
     private static final int GRID_ITEM_HEIGHT = 200;
-    private SimpleBackgroundManager simpleBackgroundManager; //处理内容区实际的背景更改
+    private MyBackgroundManager myBackgroundManager; //处理内容区实际的背景更改:test
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainFragment extends BrowseFragment {
         setupEventListeners();
 
         //背景管理器初始化
-        simpleBackgroundManager = new SimpleBackgroundManager(getActivity());
+        myBackgroundManager = new MyBackgroundManager(getActivity());
     }
 
     /**
@@ -102,12 +102,17 @@ public class MainFragment extends BrowseFragment {
         HeaderItem cardPresenterHeader = new HeaderItem(1, "CardPresenter");
         CardPresenter cardPresenter = new CardPresenter();
         ArrayObjectAdapter cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
-
         for (int i = 0; i < 10; i++) {
             Movie movie = new Movie();
             movie.setTitle("title" + i);
             movie.setStudio("studio" + i);
-            movie.setCardImageUrl("https://raw.githubusercontent.com/cnlius/resource/master/images/other/view_01.jpg");
+            if (i % 3 == 0) {
+                movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02580.jpg");
+            } else if (i % 3 == 1) {
+                movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02630.jpg");
+            } else {
+                movie.setCardImageUrl("https://raw.githubusercontent.com/cnlius/resource/master/images/other/view_01.jpg");
+            }
             cardRowAdapter.add(movie);
         }
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
@@ -132,10 +137,11 @@ public class MainFragment extends BrowseFragment {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
             LogUtils.i(this, "onItemSelected");
+            //测试案例加载本地图片
             if (item instanceof String) { // GridItemPresenter row
-                simpleBackgroundManager.clearBackground();
+                myBackgroundManager.clearBackground();
             } else if (item instanceof Movie) { // CardPresenter row
-                simpleBackgroundManager.updateBackground(getActivity().getDrawable(R.drawable.movie));
+                myBackgroundManager.updateBackground(((Movie) item).getCardImageUrl());
             }
         }
     }
