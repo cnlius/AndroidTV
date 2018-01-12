@@ -7,11 +7,18 @@ import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
+import android.support.v17.leanback.widget.OnItemViewClickedListener;
+import android.support.v17.leanback.widget.OnItemViewSelectedListener;
+import android.support.v17.leanback.widget.Presenter;
+import android.support.v17.leanback.widget.Row;
+import android.support.v17.leanback.widget.RowPresenter;
+import android.util.Log;
 
 import com.ls.tv.R;
 import com.ls.tv.model.Movie;
-import com.ls.tv.presenter.CardPresenter;
-import com.ls.tv.presenter.GridItemPresenter;
+import com.ls.tv.ui.background.SimpleBackgroundManager;
+import com.ls.tv.ui.presenter.CardPresenter;
+import com.ls.tv.ui.presenter.GridItemPresenter;
 import com.ls.tv.utils.LogUtils;
 
 /**
@@ -25,13 +32,21 @@ public class MainFragment extends BrowseFragment {
     /* Grid row item settings */
     private static final int GRID_ITEM_WIDTH = 300;
     private static final int GRID_ITEM_HEIGHT = 200;
+    private SimpleBackgroundManager simpleBackgroundManager; //处理内容区实际的背景更改
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         LogUtils.i(this, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+        //主题配置
         setupUIElements();
+        //装载数据
         loadRows();
+        //时间监听
+        setupEventListeners();
+
+        //背景管理器初始化
+        simpleBackgroundManager = new SimpleBackgroundManager(getActivity());
     }
 
     /**
@@ -101,4 +116,37 @@ public class MainFragment extends BrowseFragment {
         setAdapter(mRowsAdapter);
     }
 
+    private void setupEventListeners() {
+        //必须设置此监听，内容区的item才能被选中；
+        setOnItemViewClickedListener(new ItemViewClickedListener());
+        //内容区item被选中时监听
+        setOnItemViewSelectedListener(new ItemViewSelectedListener());
+
+    }
+
+    /**
+     * 内容区的item被选择时调用
+     * 1> 更新内容区的背景图；
+     */
+    private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
+        @Override
+        public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
+            LogUtils.i(this,"onItemSelected");
+            if (item instanceof String) { // GridItemPresenter row
+                simpleBackgroundManager.clearBackground();
+            } else if (item instanceof Movie) { // CardPresenter row
+                simpleBackgroundManager.updateBackground(getActivity().getDrawable(R.drawable.movie));
+            }
+        }
+    }
+
+    /**
+     * 内容区的item被点击时回调
+     */
+    private final class ItemViewClickedListener implements OnItemViewClickedListener {
+        @Override
+        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
+            LogUtils.i(this,"onItemClicked");
+        }
+    }
 }

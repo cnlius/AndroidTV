@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.ls.tv.presenter;
+package com.ls.tv.ui.presenter;
 
 import android.content.Context;
 import android.support.v17.leanback.widget.ImageCardView;

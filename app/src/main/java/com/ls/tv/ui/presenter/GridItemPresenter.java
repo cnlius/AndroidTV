@@ -1,4 +1,4 @@
-package com.ls.tv.presenter;
+package com.ls.tv.ui.presenter;
 
 import android.content.Context;
 import android.graphics.Color;
