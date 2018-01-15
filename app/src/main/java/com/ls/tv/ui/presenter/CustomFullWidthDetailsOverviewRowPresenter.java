@@ -1,5 +1,6 @@
 package com.ls.tv.ui.presenter;
 
+import android.support.v17.leanback.widget.DetailsOverviewLogoPresenter;
 import android.support.v17.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.RowPresenter;
@@ -24,6 +25,16 @@ public class CustomFullWidthDetailsOverviewRowPresenter extends FullWidthDetails
         super(presenter);
     }
 
+    /**
+     * logo相关设置的构造器，自定义logo在这里写
+     * @param detailsPresenter
+     * @param logoPresenter
+     */
+    public CustomFullWidthDetailsOverviewRowPresenter(Presenter detailsPresenter, DetailsOverviewLogoPresenter logoPresenter) {
+        super(detailsPresenter, logoPresenter);
+    }
+
+
     @Override
     protected void onRowViewAttachedToWindow(RowPresenter.ViewHolder vh) {
         LogUtils.i(this, "onRowViewAttachedToWindow");
@@ -41,9 +52,9 @@ public class CustomFullWidthDetailsOverviewRowPresenter extends FullWidthDetails
         LogUtils.i(this, "onLayoutOverviewFrame");
 
         /* Please try selecting either one. */
-        //setState(viewHolder, FullWidthDetailsOverviewRowPresenter.STATE_SMALL);
-        //setState(viewHolder, FullWidthDetailsOverviewRowPresenter.STATE_FULL);
-        setState(viewHolder, FullWidthDetailsOverviewRowPresenter.STATE_HALF);  // Default behavior
+//        setState(viewHolder, FullWidthDetailsOverviewRowPresenter.STATE_SMALL); //宽度包裹内容居中
+//        setState(viewHolder, FullWidthDetailsOverviewRowPresenter.STATE_FULL); //宽度全屏-logo与详情分类选项卡水平对齐
+        setState(viewHolder, FullWidthDetailsOverviewRowPresenter.STATE_HALF);  // Default behavior,宽度全屏，包裹内容
 
         super.onLayoutOverviewFrame(viewHolder, oldState, logoChanged);
     }
