@@ -56,6 +56,9 @@ public class VideoDetailsFragment extends DetailsFragment {
         mDetailsRowBuilderTask = (DetailsRowBuilderTask) new DetailsRowBuilderTask().execute(mSelectedMovie);
     }
 
+    /**
+     * 根据数据，来执行显示效果
+     */
     private class DetailsRowBuilderTask extends AsyncTask<Movie, Integer, DetailsOverviewRow> {
         @Override
         protected DetailsOverviewRow doInBackground(Movie... params) {
