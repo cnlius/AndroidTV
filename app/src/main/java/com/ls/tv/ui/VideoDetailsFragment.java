@@ -97,6 +97,8 @@ public class VideoDetailsFragment extends DetailsFragment {
             classPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
             ArrayObjectAdapter adapter = new ArrayObjectAdapter(classPresenterSelector);
 
+            //内容按顺序添加，则按顺序显示；
+
             /* 1st row: action view(详情内容的分块信息-点击展示不同的信息) */
             SparseArrayObjectAdapter sparseArrayObjectAdapter = new SparseArrayObjectAdapter();
             for (int i = 0; i < 2; i++) {
