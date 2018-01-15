@@ -59,6 +59,7 @@ public class VideoDetailsFragment extends DetailsFragment {
     private class DetailsRowBuilderTask extends AsyncTask<Movie, Integer, DetailsOverviewRow> {
         @Override
         protected DetailsOverviewRow doInBackground(Movie... params) {
+            //构建详情行
             final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedMovie);
             try {
                 int width = Utils.convertDpToPixel(getActivity(), DETAIL_THUMB_WIDTH);
@@ -79,6 +80,20 @@ public class VideoDetailsFragment extends DetailsFragment {
 
         @Override
         protected void onPostExecute(DetailsOverviewRow row) {
+            /**
+             * 构建总容器：使用ClassPresenterSelector创建adapter
+             * ClassPresenterSelector定义了这个对应关系：
+             * DetailsOverviewRow=FullWidthDetailsOverviewRowPresenter(被选择影片的详情)+ListRow(相关联的影片)
+             * ListRowPresenter。
+             */
+            ClassPresenterSelector classPresenterSelector = new ClassPresenterSelector();
+            //被选择影片的详情
+            mFwdorPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_SMALL);
+            classPresenterSelector.addClassPresenter(DetailsOverviewRow.class, mFwdorPresenter);
+            //相关联的影片列表
+            classPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
+            ArrayObjectAdapter adapter = new ArrayObjectAdapter(classPresenterSelector);
+
             /* 1st row: action view(详情内容的分块信息-点击展示不同的信息) */
             SparseArrayObjectAdapter sparseArrayObjectAdapter = new SparseArrayObjectAdapter();
             for (int i = 0; i < 2; i++) {
@@ -89,6 +104,7 @@ public class VideoDetailsFragment extends DetailsFragment {
                 }
             }
             row.setActionsAdapter(sparseArrayObjectAdapter);
+            adapter.add(row);
 
             /* 2nd row: ListRow */
             //相关联的视频列表
@@ -101,19 +117,8 @@ public class VideoDetailsFragment extends DetailsFragment {
                 movie.setStudio("studio" + i);
                 listRowAdapter.add(movie);
             }
-
-            ClassPresenterSelector classPresenterSelector = new ClassPresenterSelector();
-            mFwdorPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_SMALL);
-            LogUtils.i(this, "mFwdorPresenter.getInitialState: " + mFwdorPresenter.getInitialState());
-
-            classPresenterSelector.addClassPresenter(DetailsOverviewRow.class, mFwdorPresenter);
-            classPresenterSelector.addClassPresenter(ListRow.class, new ListRowPresenter());
-
-            ArrayObjectAdapter adapter = new ArrayObjectAdapter(classPresenterSelector);
-            /* 1st row */
-            adapter.add(row);
-            /* 2nd row */
             adapter.add(new ListRow(headerItem, listRowAdapter));
+
             /* 3rd row */
             //adapter.add(new ListRow(headerItem, listRowAdapter));
             setAdapter(adapter);
