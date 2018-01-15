@@ -20,6 +20,7 @@ import com.ls.tv.model.Movie;
 import com.ls.tv.ui.background.MyBackgroundManager;
 import com.ls.tv.ui.presenter.CardPresenter;
 import com.ls.tv.ui.presenter.GridItemPresenter;
+import com.ls.tv.utils.DataUtils;
 import com.ls.tv.utils.LogUtils;
 
 /**
@@ -108,7 +109,7 @@ public class MainFragment extends BrowseFragment {
             Movie movie = new Movie();
             movie.setTitle("title" + i);
             movie.setStudio("studio" + i);
-            setCardImageUrl(i, movie);
+            DataUtils.setCardImageUrl(i, movie);
             cardRowAdapter.add(movie);
         }
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
@@ -118,6 +119,9 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void setupEventListeners() {
+        /**
+         * itemView先响应selected再响应click里的逻辑
+         */
         //必须设置此监听，内容区的item才能被选中；
         setOnItemViewClickedListener(new ItemViewClickedListener());
         //内容区item被选中时监听
@@ -158,43 +162,4 @@ public class MainFragment extends BrowseFragment {
         }
     }
 
-    /**
-     * 设置一波网络图片
-     * @param i
-     * @param movie
-     */
-    private void setCardImageUrl(int i, Movie movie) {
-        switch (i){
-            case 1:
-                movie.setCardImageUrl(Global.NET_IMAGE_1);
-                break;
-            case 2:
-                movie.setCardImageUrl(Global.NET_IMAGE_2);
-                break;
-            case 3:
-                movie.setCardImageUrl(Global.NET_IMAGE_3);
-                break;
-            case 4:
-                movie.setCardImageUrl(Global.NET_IMAGE_4);
-                break;
-            case 5:
-                movie.setCardImageUrl(Global.NET_IMAGE_5);
-                break;
-            case 6:
-                movie.setCardImageUrl(Global.NET_IMAGE_6);
-                break;
-            case 7:
-                movie.setCardImageUrl(Global.NET_IMAGE_7);
-                break;
-            case 8:
-                movie.setCardImageUrl(Global.NET_IMAGE_8);
-                break;
-            case 9:
-                movie.setCardImageUrl(Global.NET_IMAGE_9);
-                break;
-            default:
-                movie.setCardImageUrl(Global.NET_IMAGE_10);
-                break;
-        }
-    }
 }
