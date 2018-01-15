@@ -75,7 +75,7 @@ public class VideoDetailsFragment extends DetailsFragment {
              * DetailsOverviewRow=FullWidthDetailsOverviewRowPresenter(被选择影片的详情)+ListRow(相关联的影片)
              * ListRowPresenter。
              */
-            classPresenterSelector = new ClassPresenterSelector();
+            classPresenterSelector = new ClassPresenterSelector(); //用来支持多类型的Presenter
             mAdapter = new ArrayObjectAdapter(classPresenterSelector);
             setupDetailsOverviewRow();
             setupDetailsOverviewRowPresenter();
