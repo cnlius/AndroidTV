@@ -39,5 +39,9 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.DetailsActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/title_activity_details"/>
     </application>
 </manifest>

@@ -1,5 +1,6 @@
 package com.ls.tv.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.BrowseFragment;
@@ -148,6 +149,12 @@ public class MainFragment extends BrowseFragment {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
             LogUtils.i(this, "onItemClicked");
+            if (item instanceof Movie) {
+                Movie movie = (Movie) item;
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra(DetailsActivity.MOVIE, movie);
+                getActivity().startActivity(intent);
+            }
         }
     }
 
