@@ -153,7 +153,7 @@ public class VideoDetailsFragment extends DetailsFragment {
             }
         });
 
-        //添加详情样式
+        //添加详情DetailRow的Presenter
         classPresenterSelector.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
     }
 
