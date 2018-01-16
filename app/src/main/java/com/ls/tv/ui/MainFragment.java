@@ -2,6 +2,7 @@ package com.ls.tv.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.BrowseFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -13,9 +14,9 @@ import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.widget.Toast;
 
 import com.ls.tv.R;
-import com.ls.tv.app.Global;
 import com.ls.tv.model.Movie;
 import com.ls.tv.ui.background.MyBackgroundManager;
 import com.ls.tv.ui.presenter.CardPresenter;
@@ -99,6 +100,7 @@ public class MainFragment extends BrowseFragment {
         gridRowAdapter.add("ITEM 1");
         gridRowAdapter.add("ITEM 2");
         gridRowAdapter.add("ITEM 3");
+        gridRowAdapter.add("ErrorFragment"); //用来测试error页面的展示；
         mRowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
         //--第2组内容--------------------------------------------
         /* CardPresenter */
@@ -158,8 +160,41 @@ public class MainFragment extends BrowseFragment {
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.MOVIE, movie);
                 getActivity().startActivity(intent);
+            } else if (item instanceof String) {
+                if (item == "ErrorFragment") { //用来测试error页面的展示；
+                    //跳转到新的错误页面
+                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
+                    startActivity(intent);
+                    //在当前页面显示错误界面
+//                    testError();
+                }else{
+                    Toast.makeText(getActivity(), String.valueOf(item), Toast.LENGTH_SHORT).show();
+                }
             }
         }
+    }
+
+    private ErrorFragment mErrorFragment;
+    private SpinnerFragment mSpinnerFragment;
+    private static int TIMER_DELAY = 2000;
+    /**
+     * 一个error页面：loading+error content
+     */
+    private void testError() {
+        mErrorFragment = new ErrorFragment();
+        getFragmentManager().beginTransaction().add(R.id.main_browse_fragment, mErrorFragment).commit();
+
+        mSpinnerFragment = new SpinnerFragment();
+        getFragmentManager().beginTransaction().add(R.id.main_browse_fragment, mSpinnerFragment).commit();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getFragmentManager().beginTransaction().remove(mSpinnerFragment).commit();
+                mErrorFragment.setErrorContent();
+            }
+        }, TIMER_DELAY);
     }
 
 }

@@ -43,5 +43,10 @@
             android:name=".ui.DetailsActivity"
             android:screenOrientation="landscape"
             android:label="@string/title_activity_details"/>
+
+        <activity
+            android:name=".ui.BrowseErrorActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/title_activity_error"/>
     </application>
 </manifest>
