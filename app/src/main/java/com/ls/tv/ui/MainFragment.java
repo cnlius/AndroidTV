@@ -37,6 +37,11 @@ public class MainFragment extends BrowseFragment {
     private static final int GRID_ITEM_HEIGHT = 200;
     private MyBackgroundManager myBackgroundManager; //处理内容区实际的背景更改:test
 
+    /* about error page */
+    private ErrorFragment mErrorFragment;
+    private SpinnerFragment mSpinnerFragment;
+    private static int TIMER_DELAY = 2000;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         LogUtils.i(this, "onActivityCreated");
@@ -100,7 +105,8 @@ public class MainFragment extends BrowseFragment {
         gridRowAdapter.add("ITEM 1");
         gridRowAdapter.add("ITEM 2");
         gridRowAdapter.add("ITEM 3");
-        gridRowAdapter.add("ErrorFragment"); //用来测试error页面的展示；
+        gridRowAdapter.add("ErrorNewPage"); //用来测试error页面的展示；
+        gridRowAdapter.add("ErrorCoverPage"); //用来测试error页面的展示；
         mRowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
         //--第2组内容--------------------------------------------
         /* CardPresenter */
@@ -161,31 +167,29 @@ public class MainFragment extends BrowseFragment {
                 intent.putExtra(DetailsActivity.MOVIE, movie);
                 getActivity().startActivity(intent);
             } else if (item instanceof String) {
-                if (item == "ErrorFragment") { //用来测试error页面的展示；
+                if (item == "ErrorNewPage") { //新启动一个error页面；
                     //跳转到新的错误页面
                     Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
                     startActivity(intent);
+                } else if (item == "ErrorCoverPage") { //error页面覆盖当前页面
                     //在当前页面显示错误界面
-//                    testError();
-                }else{
+                    testError();
+                } else {
                     Toast.makeText(getActivity(), String.valueOf(item), Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
-    private ErrorFragment mErrorFragment;
-    private SpinnerFragment mSpinnerFragment;
-    private static int TIMER_DELAY = 2000;
     /**
      * 一个error页面：loading+error content
      */
     private void testError() {
         mErrorFragment = new ErrorFragment();
-        getFragmentManager().beginTransaction().add(R.id.main_browse_fragment, mErrorFragment).commit();
+        getFragmentManager().beginTransaction().add(R.id.main_browse_fragment, mErrorFragment).addToBackStack(null).commit();
 
         mSpinnerFragment = new SpinnerFragment();
-        getFragmentManager().beginTransaction().add(R.id.main_browse_fragment, mSpinnerFragment).commit();
+        getFragmentManager().beginTransaction().add(R.id.main_browse_fragment, mSpinnerFragment).addToBackStack(null).commit();
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

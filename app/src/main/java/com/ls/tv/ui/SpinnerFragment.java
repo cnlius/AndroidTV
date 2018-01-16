@@ -27,4 +27,6 @@ public class SpinnerFragment extends Fragment {
         }
         return progressBar;
     }
+
+
 }

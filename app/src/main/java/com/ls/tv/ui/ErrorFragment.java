@@ -42,7 +42,11 @@ public class ErrorFragment extends android.support.v17.leanback.app.ErrorFragmen
         setButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                getFragmentManager().beginTransaction().remove(ErrorFragment.this).commitAllowingStateLoss();
+                if(getActivity() instanceof BrowseErrorActivity){
+                    getActivity().finish();
+                }else{
+                    getFragmentManager().beginTransaction().remove(ErrorFragment.this).commitAllowingStateLoss();
+                }
             }
         });
     }
