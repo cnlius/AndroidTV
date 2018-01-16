@@ -7,7 +7,9 @@ import android.os.Handler;
 import com.ls.tv.R;
 
 /**
- * 错误页面
+ * 错误页面:
+ * 1> 可以跳转到新的页面；
+ * 2> 在当前页面上覆盖一层错误页面；
  * Created by liusong on 2018/1/16.
  */
 
