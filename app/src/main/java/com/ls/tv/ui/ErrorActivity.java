@@ -13,7 +13,7 @@ import com.ls.tv.R;
  * Created by liusong on 2018/1/16.
  */
 
-public class BrowseErrorActivity extends Activity {
+public class ErrorActivity extends Activity {
     private ErrorFragment mErrorFragment;
     private SpinnerFragment mSpinnerFragment;
     private static int TIMER_DELAY = 2000;

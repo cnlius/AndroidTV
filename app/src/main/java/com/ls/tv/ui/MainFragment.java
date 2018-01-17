@@ -169,7 +169,7 @@ public class MainFragment extends BrowseFragment {
             } else if (item instanceof String) {
                 if (item == "ErrorNewPage") { //新启动一个error页面；
                     //跳转到新的错误页面
-                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
+                    Intent intent = new Intent(getActivity(), ErrorActivity.class);
                     startActivity(intent);
                 } else if (item == "ErrorCoverPage") { //error页面覆盖当前页面
                     //在当前页面显示错误界面
