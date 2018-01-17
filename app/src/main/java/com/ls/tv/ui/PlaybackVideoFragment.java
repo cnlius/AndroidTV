@@ -48,7 +48,7 @@ public class PlaybackVideoFragment extends VideoSupportFragment {
 
 
     private void receivedData() {
-        mSelectedMovie = (Movie) getActivity().getIntent().getSerializableExtra(DetailsActivity.MOVIE);
+        mSelectedMovie = getActivity().getIntent().getParcelableExtra(PlaybackActivity.MOVIE);
     }
 
     @Override

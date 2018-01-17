@@ -1,9 +1,8 @@
 package com.ls.tv.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v17.leanback.app.PlaybackFragment;
+import android.support.v4.app.FragmentActivity;
 
 import com.ls.tv.R;
 
@@ -15,13 +14,15 @@ import com.ls.tv.R;
  * Created by liusong on 2018/1/17.
  */
 
-public class PlaybackActivity extends Activity {
+public class PlaybackActivity extends FragmentActivity {
+    public static final String MOVIE = "Movie";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playback_overlay);
 
-        getFragmentManager().beginTransaction().add(R.id.container_controls, new PlaybackFragment()).commitAllowingStateLoss();
+        PlaybackVideoFragment playbackVideoFragment = new PlaybackVideoFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_controls, playbackVideoFragment).commitAllowingStateLoss();
     }
 }
