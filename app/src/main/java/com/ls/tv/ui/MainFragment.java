@@ -117,6 +117,7 @@ public class MainFragment extends BrowseFragment {
             Movie movie = new Movie();
             movie.setTitle("title" + i);
             movie.setStudio("studio" + i);
+            movie.setDescription("description" + i);
             DataUtils.setCardImageUrl(i, movie);
             cardRowAdapter.add(movie);
         }

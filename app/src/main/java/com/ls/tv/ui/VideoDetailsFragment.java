@@ -170,6 +170,7 @@ public class VideoDetailsFragment extends DetailsFragment {
             DataUtils.setCardImageUrl(i, movie);
             movie.setTitle("title" + i);
             movie.setStudio("studio" + i);
+            movie.setDescription("description" + i);
             listRowAdapter.add(movie);
         }
         mAdapter.add(new ListRow(headerItem, listRowAdapter));

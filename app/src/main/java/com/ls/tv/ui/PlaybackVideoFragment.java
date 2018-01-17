@@ -15,6 +15,7 @@ import android.support.v17.leanback.widget.PlaybackControlsRowPresenter;
 import com.ls.tv.model.Movie;
 import com.ls.tv.ui.presenter.CardPresenter;
 import com.ls.tv.ui.presenter.DetailsDescriptionPresenter;
+import com.ls.tv.utils.DataUtils;
 import com.ls.tv.utils.LogUtils;
 
 /**
@@ -28,21 +29,22 @@ public class PlaybackVideoFragment extends VideoSupportFragment {
     private ArrayObjectAdapter mRowsAdapter; // 总容器
 
     private PlaybackControlsRow mPlaybackControlsRow;
-    private ArrayObjectAdapter mPrimaryActionsAdapter;
-    private ArrayObjectAdapter mSecondaryActionsAdapter;
+    private ArrayObjectAdapter mPrimaryActionsAdapter; // 主要按钮UI
+    private ArrayObjectAdapter mSecondaryActionsAdapter; //次要按钮UI
 
-    private PlaybackControlsRow.PlayPauseAction mPlayPauseAction;
-    private PlaybackControlsRow.RepeatAction mRepeatAction;
-    private PlaybackControlsRow.ThumbsUpAction mThumbsUpAction;
-    private PlaybackControlsRow.ThumbsDownAction mThumbsDownAction;
-    private PlaybackControlsRow.ShuffleAction mShuffleAction;
-    private PlaybackControlsRow.SkipNextAction mSkipNextAction;
-    private PlaybackControlsRow.SkipPreviousAction mSkipPreviousAction;
-    private PlaybackControlsRow.FastForwardAction mFastForwardAction;
-    private PlaybackControlsRow.RewindAction mRewindAction;
-    private PlaybackControlsRow.HighQualityAction mHighQualityAction;
-    private PlaybackControlsRow.ClosedCaptioningAction mClosedCaptioningAction;
-    private PlaybackControlsRow.MoreActions mMoreActions;
+    //控制动作
+    private PlaybackControlsRow.PlayPauseAction mPlayPauseAction; //暂停
+    private PlaybackControlsRow.RepeatAction mRepeatAction; // 重复
+    private PlaybackControlsRow.ThumbsUpAction mThumbsUpAction; //满意，赞
+    private PlaybackControlsRow.ThumbsDownAction mThumbsDownAction; //反对，取消赞
+    private PlaybackControlsRow.ShuffleAction mShuffleAction; //搁置
+    private PlaybackControlsRow.SkipNextAction mSkipNextAction; //跳过下一个
+    private PlaybackControlsRow.SkipPreviousAction mSkipPreviousAction; //跳过前一个
+    private PlaybackControlsRow.FastForwardAction mFastForwardAction; //快进
+    private PlaybackControlsRow.RewindAction mRewindAction; //回退
+    private PlaybackControlsRow.HighQualityAction mHighQualityAction; //高质量
+    private PlaybackControlsRow.ClosedCaptioningAction mClosedCaptioningAction; //隐藏字幕
+    private PlaybackControlsRow.MoreActions mMoreActions; //更多
 
 
     private void receivedData() {
@@ -70,7 +72,7 @@ public class PlaybackVideoFragment extends VideoSupportFragment {
     private void setUpRows() {
         ClassPresenterSelector ps = new ClassPresenterSelector();
         //控制界面UI
-        PlaybackControlsRowPresenter playbackControlsRowPresenter= new PlaybackControlsRowPresenter(new DetailsDescriptionPresenter());
+        PlaybackControlsRowPresenter playbackControlsRowPresenter = new PlaybackControlsRowPresenter(new DetailsDescriptionPresenter());
 
         //添加控制row
         ps.addClassPresenter(PlaybackControlsRow.class, playbackControlsRowPresenter);
@@ -92,15 +94,23 @@ public class PlaybackVideoFragment extends VideoSupportFragment {
      * 控制行
      */
     private void addPlaybackControlsRow() {
+        //总控制容器UI
         mPlaybackControlsRow = new PlaybackControlsRow(mSelectedMovie);
+        //添加到总容器
         mRowsAdapter.add(mPlaybackControlsRow);
 
+        //控制控件容器构建
         ControlButtonPresenterSelector presenterSelector = new ControlButtonPresenterSelector();
+        //主要按钮UI
         mPrimaryActionsAdapter = new ArrayObjectAdapter(presenterSelector);
+        //次要按钮UI
         mSecondaryActionsAdapter = new ArrayObjectAdapter(presenterSelector);
+
+        //将两个控制行ui添加到总控
         mPlaybackControlsRow.setPrimaryActionsAdapter(mPrimaryActionsAdapter);
         mPlaybackControlsRow.setSecondaryActionsAdapter(mSecondaryActionsAdapter);
 
+        //初始化各种控制动作
         Activity activity = getActivity();
         mPlayPauseAction = new PlaybackControlsRow.PlayPauseAction(activity);
         mRepeatAction = new PlaybackControlsRow.RepeatAction(activity);
@@ -115,14 +125,14 @@ public class PlaybackVideoFragment extends VideoSupportFragment {
         mClosedCaptioningAction = new PlaybackControlsRow.ClosedCaptioningAction(activity);
         mMoreActions = new PlaybackControlsRow.MoreActions(activity);
 
-        /* PrimaryAction setting */
+        /* PrimaryAction setting(控制动作装填到主要控制UI) */
         mPrimaryActionsAdapter.add(mSkipPreviousAction);
         mPrimaryActionsAdapter.add(mRewindAction);
         mPrimaryActionsAdapter.add(mPlayPauseAction);
         mPrimaryActionsAdapter.add(mFastForwardAction);
         mPrimaryActionsAdapter.add(mSkipNextAction);
 
-        /* SecondaryAction setting */
+        /* SecondaryAction setting(控制动作装填到次要控制UI) */
         mSecondaryActionsAdapter.add(mThumbsUpAction);
         mSecondaryActionsAdapter.add(mThumbsDownAction);
         mSecondaryActionsAdapter.add(mRepeatAction);
@@ -133,17 +143,18 @@ public class PlaybackVideoFragment extends VideoSupportFragment {
     }
 
     /**
-     * 列表视频
+     * 其他内容列表
      */
     private void addOtherRows() {
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
-        Movie movie = new Movie();
-        movie.setTitle("Title");
-        movie.setStudio("studio");
-        movie.setDescription("description");
-        movie.setCardImageUrl("http://heimkehrend.raindrop.jp/kl-hacker/wp-content/uploads/2014/08/DSC02580.jpg");
-        listRowAdapter.add(movie);
-        listRowAdapter.add(movie);
+        for (int i = 0; i < 6; i++) {
+            Movie movie = new Movie();
+            DataUtils.setCardImageUrl(i, movie);
+            movie.setTitle("title" + i);
+            movie.setStudio("studio" + i);
+            movie.setDescription("description" + i);
+            listRowAdapter.add(movie);
+        }
 
         HeaderItem header = new HeaderItem(0, "OtherRows");
         mRowsAdapter.add(new ListRow(header, listRowAdapter));

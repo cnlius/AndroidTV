@@ -77,6 +77,7 @@ public class CardPresenter extends Presenter {
         holder.mCardView.setTitleText(movie.getTitle());
         //描述信息
         holder.mCardView.setContentText(movie.getStudio());
+        holder.mCardView.setContentDescription(movie.getDescription());
         //宽高
         holder.mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
         //设置cardImageView的图片
