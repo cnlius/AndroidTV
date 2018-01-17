@@ -9,9 +9,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"/>
 
-    <fragment
-        android:id="@+id/playback_controls_fragment"
-        android:name="com.ls.tv.ui.PlaybackVideoFragment"
+    <FrameLayout
+        android:id="@+id/container_controls"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

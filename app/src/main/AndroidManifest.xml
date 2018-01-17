@@ -48,5 +48,10 @@
             android:name=".ui.ErrorActivity"
             android:screenOrientation="landscape"
             android:label="@string/title_activity_error"/>
+
+        <activity
+            android:name=".ui.PlaybackActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/title_activity_error"/>
     </application>
 </manifest>

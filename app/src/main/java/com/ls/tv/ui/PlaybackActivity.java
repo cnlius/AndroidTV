@@ -3,6 +3,7 @@ package com.ls.tv.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v17.leanback.app.PlaybackFragment;
 
 import com.ls.tv.R;
 
@@ -20,5 +21,7 @@ public class PlaybackActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playback_overlay);
+
+        getFragmentManager().beginTransaction().add(R.id.container_controls, new PlaybackFragment()).commitAllowingStateLoss();
     }
 }

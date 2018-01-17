@@ -14,6 +14,7 @@ import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.ls.tv.R;
@@ -164,9 +165,15 @@ public class MainFragment extends BrowseFragment {
             LogUtils.i(this, "onItemClicked");
             if (item instanceof Movie) {
                 Movie movie = (Movie) item;
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.MOVIE, movie);
-                getActivity().startActivity(intent);
+                if (TextUtils.equals(movie.getTitle(), "title0")) {
+                    Intent intent = new Intent(getActivity(), PlaybackActivity.class);
+                    intent.putExtra(DetailsActivity.MOVIE, movie);
+                    getActivity().startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra(DetailsActivity.MOVIE, movie);
+                    getActivity().startActivity(intent);
+                }
             } else if (item instanceof String) {
                 if (item == "ErrorNewPage") { //新启动一个error页面；
                     //跳转到新的错误页面
