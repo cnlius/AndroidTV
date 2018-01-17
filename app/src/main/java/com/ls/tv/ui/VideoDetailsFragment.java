@@ -77,6 +77,7 @@ public class VideoDetailsFragment extends DetailsFragment {
              */
             classPresenterSelector = new ClassPresenterSelector(); //用来支持多类型的Presenter
             mAdapter = new ArrayObjectAdapter(classPresenterSelector);
+            //设置row的顺序，决定显示的顺序
             setupDetailsOverviewRow();
             setupDetailsOverviewRowPresenter();
             setupRelatedMovieListRow();
