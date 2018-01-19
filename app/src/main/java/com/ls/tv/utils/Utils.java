@@ -94,14 +94,23 @@ public class Utils {
         return result;
     }
 
+    /**
+     * 获取url媒体文件的播放时间
+     * @param videoUrl
+     * @return
+     */
     public static long getDuration(String videoUrl) {
+        //MediaMetadataRetriever:媒体文件中取得帧和元数据
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             mmr.setDataSource(videoUrl, new HashMap<String, String>());
         } else {
+            //设置数据源
             mmr.setDataSource(videoUrl);
         }
-        return Long.parseLong(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+        //extract metadata: 提取元数据
+        String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION); //播放时间
+        return Long.parseLong(duration);
     }
 
     public static boolean hasPermission(final Context context, final String permission) {

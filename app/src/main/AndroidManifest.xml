@@ -50,7 +50,7 @@
             android:label="@string/title_activity_error"/>
 
         <activity
-            android:name=".ui.PlaybackActivity"
+            android:name=".ui.PlayVideoActivity"
             android:screenOrientation="landscape"
             android:label="@string/title_activity_error"/>
     </application>

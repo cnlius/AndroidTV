@@ -166,7 +166,7 @@ public class MainFragment extends BrowseFragment {
             if (item instanceof Movie) {
                 Movie movie = (Movie) item;
                 if (TextUtils.equals(movie.getTitle(), "title0")) {
-                    Intent intent = new Intent(getActivity(), PlaybackActivity.class);
+                    Intent intent = new Intent(getActivity(), PlayVideoActivity.class);
                     intent.putExtra(DetailsActivity.MOVIE, movie);
                     getActivity().startActivity(intent);
                 } else {
