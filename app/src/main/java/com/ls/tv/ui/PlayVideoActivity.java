@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.PlaybackControlsRow;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.widget.VideoView;
 
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
  */
 
 public class PlayVideoActivity extends FragmentActivity {
+
     public static final String MOVIE = "Movie";
 
     private Movie mSelectedMovie;
@@ -78,6 +78,7 @@ public class PlayVideoActivity extends FragmentActivity {
 
     /**
      * 设置播放地址
+     *
      * @param videoUrl
      */
     public void setVideoPath(String videoUrl) {
@@ -159,6 +160,7 @@ public class PlayVideoActivity extends FragmentActivity {
     /**
      * 设置播放的时间位置
      * position<=mDuration
+     *
      * @param position
      */
     public void setPosition(int position) {
@@ -191,7 +193,7 @@ public class PlayVideoActivity extends FragmentActivity {
         Movie movie = mItems.get(mCurrentItem);
         if (movie != null) {
             setVideoPath(movie.getVideoUrl());
-            mPlaybackState=LeanbackPlaybackState.PAUSED;
+            mPlaybackState = LeanbackPlaybackState.PAUSED;
             playPause(autoPlay);
         }
 
@@ -212,7 +214,7 @@ public class PlayVideoActivity extends FragmentActivity {
         Movie movie = mItems.get(mCurrentItem);
         if (movie != null) {
             setVideoPath(movie.getVideoUrl());
-            mPlaybackState=LeanbackPlaybackState.PAUSED;
+            mPlaybackState = LeanbackPlaybackState.PAUSED;
             playPause(autoPlay);
         }
 
@@ -229,7 +231,9 @@ public class PlayVideoActivity extends FragmentActivity {
     public void setDuration(long duration) {
         this.mDuration = duration;
     }
+
     private ArrayObjectAdapter mRowsAdapter;
+
     public void updatePlaybackRow(int index) {
         if (mPlaybackControlsRow.getItem() != null) {
             Movie item = (Movie) mPlaybackControlsRow.getItem();
