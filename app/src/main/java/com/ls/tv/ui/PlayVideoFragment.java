@@ -184,6 +184,7 @@ public class PlayVideoFragment extends VideoSupportFragment {
     private OnActionClickedListener playbackControlsListener = new OnActionClickedListener() {
         @Override
         public void onActionClicked(Action action) {
+            LogUtils.i(this,action.toString());
             if (action.getId() == mPlayPauseAction.getId()) { //暂停/播放
                 if (mPlayPauseAction.getIndex() == PlaybackControlsRow.PlayPauseAction.PLAY) {
                     mMediaController.getTransportControls().play();
@@ -191,16 +192,16 @@ public class PlayVideoFragment extends VideoSupportFragment {
                     mMediaController.getTransportControls().pause();
                 }
             } else if (action.getId() == mSkipNextAction.getId()) { //跳过下一节
-                    /* SkipNext action */
+                /* SkipNext action */
                 mMediaController.getTransportControls().skipToNext();
             } else if (action.getId() == mSkipPreviousAction.getId()) { //快进
-                    /* SkipPrevious action */
+                /* SkipPrevious action */
                 mMediaController.getTransportControls().skipToPrevious();
             } else if (action.getId() == mFastForwardAction.getId()) { //快退
-                    /* FastForward action  */
+                /* FastForward action  */
                 mMediaController.getTransportControls().fastForward();
             } else if (action.getId() == mRewindAction.getId()) { // 退到上一节
-                    /* Rewind action */
+                /* Rewind action */
                 mMediaController.getTransportControls().rewind();
             }
             if (action instanceof PlaybackControlsRow.MultiAction) {
